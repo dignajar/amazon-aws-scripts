@@ -12,7 +12,7 @@ username = "snapshot"
 # Region name
 region = "us-east-1"
 
-# Amount of snapshot, each snapshot it's per day
+# Amount of snapshot
 snapshotAmount = 2
 
 # Libraries
