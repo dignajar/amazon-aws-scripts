@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Edit this variables
+# EDIT
 # ------------------------------------------------------------------------------
 
 # Volume ID for snapshot
@@ -12,7 +12,7 @@ username = "snapshot"
 # Region name
 region = "us-east-1"
 
-# Amount of snapshot
+# Amount of snapshot/days
 snapshotAmount = 2
 
 # Libraries
@@ -29,11 +29,6 @@ tomorrowDate = todayDate + timedelta(days=snapshotAmount)
 # Session
 # ------------------------------------------------------------------------------
 session = boto3.Session(profile_name=username)
-
-# IAM session
-# ------------------------------------------------------------------------------
-iam = session.client("iam")
-iamOwenerID = iam.get_user()['User']['Arn'].split(':')[4]
 
 # EC2 session
 # ------------------------------------------------------------------------------
@@ -54,7 +49,7 @@ print ""
 # ------------------------------------------------------------------------------
 
 # snapshot list
-snapshotList = ec2.describe_snapshots(OwnerIds=[iamOwenerID])
+snapshotList = ec2.describe_snapshots()
 for snap in snapshotList['Snapshots']:
 
     # snapshot ID
@@ -74,5 +69,3 @@ for snap in snapshotList['Snapshots']:
             print "Deleting snapshot: ID "+snapID+", Date "+snapDescription.split(":")[1]
             print ec2.delete_snapshot(SnapshotId=snapID)
             print ""
-
-
